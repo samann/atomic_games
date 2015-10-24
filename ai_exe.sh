@@ -12,8 +12,8 @@ while getopts ':b:p:t:' flag; do
   esac
 done
 
-echo "fboard = ${fboard} "
-echo "fcolor = ${fcolor} "
-echo "ftime = ${ftime} "
+#echo "fboard = ${fboard} "
+#echo "fcolor = ${fcolor} "
+#echo "ftime = ${ftime} "
 
 java Othello ${fboard} ${fcolor} ${ftime}
