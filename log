@@ -1,2 +1,9 @@
+<<<<<<< HEAD
 Oct 24, 2015 9:46:54 AM com.goals.squad.othello.Othello main
 INFO: success
+=======
+Oct 24, 2015 9:49:52 AM com.goals.squad.othello.Othello main
+INFO: success
+Oct 24, 2015 9:49:52 AM com.goals.squad.othello.Othello main
+SEVERE: not enough args
+>>>>>>> 955be913df35c5641287b2c3c64333bb6a888210
