@@ -32,6 +32,14 @@ public class Othello {
         }
 
         Gson gson = new Gson();
+        JsonObject board = gson.fromJson(args[0], JsonObject.class);
+
+        System.out.println("Height: " + board.height);
+        System.out.println("Width: " + board.width);
+        System.out.println("Max: " + board.maxindex);
+        for (String piece : board.squares) {
+            System.out.println(piece);
+        }
 
     }
 }
