@@ -23,7 +23,7 @@ public class Othello {
     private static int[] counts;
 
     public static void main(String[] args) {
-	// write your code here
+        // write your code here
         FileHandler fh;
 
         try {
@@ -59,37 +59,29 @@ public class Othello {
         time = Integer.parseInt(args[2]);
         counts = new int[squares.length];
         Arrays.fill(counts, 0);
-
-//        for (boolean b : test) {
-//            if (b) {
-//                log.log(Level.INFO, "about to exit: i = " + i);
-//                System.exit(i);
-//            }
-//            i++;
-//        }
-    }
-
-    public int find_highest_count() {
-        for (int i = 0; i < counts.length; i++) {
+        for (int i = 0; i < squares.length; i++) {
             is_valid(i);
         }
-        // FIXME: hello
-        return 0;
+        System.exit(find_highest_count());
     }
-//    public static boolean[] fill_valid_sqaures() {
-//        boolean[] valid = new boolean[squares.length];
-//        Arrays.fill(valid, false);
-//        for (int i = 0; i < squares.length; i++) {
-//            log.log(Level.INFO, "i = " + i);
-//            valid[i] = is_valid(i);
-//        }
-//        return valid;
-//    }
+
+    public static int find_highest_count() {
+        int temp = 0, index = -1;
+        for (int i = 0; i < counts.length; i++) {
+            if (counts[i] > temp) {
+                temp = counts[i];
+                index = i;
+            }
+        }
+        return index;
+    }
 
     public static int traverse(int index, int dir) {
+        boolean traversed = false;
         int count = 0;
+        log.log(Level.INFO, "index = " + index + " count = " + counts[index]);
         while ((index > 0 && index < 63) ||
-                ( (index % 8 != 7) || (index % 8 != 0) ) ) {
+                ((index % 8 != 7) || (index % 8 != 0)) && !traversed) {
 
             index = index + dir;
 
@@ -97,391 +89,227 @@ public class Othello {
                 break;
             }
             if (squares[index].equals(empty)) {
-                break;
-            }
-            if (squares[index].equals(our_color) ){
-                break;
-            }
-            if (squares[index].equals(their_color)) {
-               count++;
+                traversed = true;
+            } else if (squares[index].equals(our_color)) {
+                traversed = true;
+            } else if (squares[index].equals(their_color)) {
+                traversed = false;
+                count++;
             }
         }
         return count;
     }
 
-    public static int is_valid(int index) {
+    public static boolean is_valid(int index) {
         // return direction
-        int temp, dir = 0;
         if (squares[index].equals(empty)) {
-            log.log(Level.INFO, "index = " + index);
+
             // middle of board
             if ((index % 8 > 0 && index % 8 < 7) && (index > 8 && index < 55)) {
                 // below
                 if (squares[index + 8].equals(their_color)) {
-                    temp = traverse(index, 8);
-                    if (temp > counts[index]) {
-                        counts[index] = temp;
-                        dir = 8;
-                    }
+                    counts[index] += traverse(index, 8);
                 }
 
                 // above
                 if (squares[index - 8].equals(their_color)) {
-                     temp = traverse(index, -8);
-                    if (temp > counts[index]) {
-                        counts[index] = temp;
-                        dir = -8;
-                    }
+                    counts[index] += traverse(index, -8);
                 }
 
                 // right
                 if (squares[index + 1].equals(their_color)) {
-                    temp =  traverse(index, 1);
-                    if (temp > counts[index]) {
-                        counts[index] = temp;
-                        dir = 1;
-                    }
+                    counts[index] += traverse(index, 1);
                 }
 
                 // left
                 if (squares[index - 1].equals(their_color)) {
-                    temp =  traverse(index, -1);
-                    if (temp > counts[index]) {
-                        counts[index] = temp;
-                        dir = -1;
-                    }
+                    counts[index] += traverse(index, -1);
                 }
 
                 // up right
                 if (squares[index - 7].equals(their_color)) {
-                    temp =  traverse(index, -7);
-                    if (temp > counts[index]) {
-                        counts[index] = temp;
-                        dir = -7;
-                    }
+                    counts[index] += traverse(index, -7);
                 }
 
                 // up left
                 if (squares[index - 9].equals(their_color)) {
-                    temp =  traverse(index, -9);
-                    if (temp > counts[index]) {
-                        counts[index] = temp;
-                        dir = -9;
-                    }
+                    counts[index] += traverse(index, -9);
                 }
 
                 // below left
                 if (squares[index + 7].equals(their_color)) {
-                    temp =  traverse(index, 7);
-                    if (temp > counts[index]) {
-                        counts[index] = temp;
-                        dir = 7;
-                    }
+                    counts[index] += traverse(index, 7);
                 }
 
                 // below right
                 if (squares[index + 9].equals(their_color)) {
-                    temp =  traverse(index, 9);
-                    if (temp > counts[index]) {
-                        counts[index] = temp;
-                        dir = 9;
-                    }
+                    counts[index] += traverse(index, 9);
                 }
                 // top row
             } else if (index > 0 && index < 7) {
 
                 // below left
                 if (squares[index + 7].equals(their_color)) {
-                    temp =  traverse(index, 7);
-                    if (temp > counts[index]) {
-                        counts[index] = temp;
-                        dir = 7;
-                    }
+                    counts[index] += traverse(index, 7);
                 }
 
                 // below right
                 if (squares[index + 9].equals(their_color)) {
-                    temp =  traverse(index, 9);
-                    if (temp > counts[index]) {
-                        counts[index] = temp;
-                        dir = 9;
-                    }
+                    counts[index] += traverse(index, 9);
                 }
 
                 // right
                 if (squares[index + 1].equals(their_color)) {
-                    temp =  traverse(index, 1);
-                    if (temp > counts[index]) {
-                        counts[index] = temp;
-                        dir = 1;
-                    }
+                    counts[index] += traverse(index, 1);
                 }
 
                 // left
                 if (squares[index - 1].equals(their_color)) {
-                    temp =  traverse(index, -1);
-                    if (temp > counts[index]) {
-                        counts[index] = temp;
-                        dir = -1;
-                    }
+                    counts[index] += traverse(index, -1);
                 }
 
                 // below
                 if (squares[index + 8].equals(their_color)) {
-                    temp =  traverse(index, 8);
-                    if (temp > counts[index]) {
-                        counts[index] = temp;
-                        dir = 8;
-                    }
+                    counts[index] += traverse(index, 8);
                 }
                 // bottom row
             } else if (index > 56 && index < 63) {
                 // above
                 if (squares[index - 8].equals(their_color)) {
-                    temp =  traverse(index, -8);
-                    if (temp > counts[index]) {
-                        counts[index] = temp;
-                        dir = -8;
-                    }
+                    counts[index] += traverse(index, -8);
                 }
 
                 // right
                 if (squares[index + 1].equals(their_color)) {
-                    temp =  traverse(index, 1);
-                    if (temp > counts[index]) {
-                        counts[index] = temp;
-                        dir = 1;
-                    }
+                    counts[index] += traverse(index, 1);
                 }
 
                 // left
                 if (squares[index - 1].equals(their_color)) {
-                    temp =  traverse(index, -1);
-                    if (temp > counts[index]) {
-                        counts[index] = temp;
-                        dir = -1;
-                    }
+                    counts[index] += traverse(index, -1);
                 }
 
                 // up right
                 if (squares[index - 7].equals(their_color)) {
-                    temp =  traverse(index, -7);
-                    if (temp > counts[index]) {
-                        counts[index] = temp;
-                        dir = -7;
-                    }
+                    counts[index] += traverse(index, -7);
                 }
 
                 // up left
                 if (squares[index - 9].equals(their_color)) {
-                    temp =  traverse(index, -9);
-                    if (temp > counts[index]) {
-                        counts[index] = temp;
-                        dir = -9;
-                    }
+                    counts[index] += traverse(index, -9);
                 }
                 // left column
             } else if (index % 8 == 0) {
                 if (index == 0) {
                     // below right
                     if (squares[index + 9].equals(their_color)) {
-                        temp =  traverse(index, 9);
-                        if (temp > counts[index]) {
-                            counts[index] = temp;
-                            dir = 9;
-                        }
+                        counts[index] += traverse(index, 9);
                     }
 
                     // below
                     if (squares[index + 8].equals(their_color)) {
-                        temp =  traverse(index, 8);
-                        if (temp > counts[index]) {
-                            counts[index] = temp;
-                            dir = 8;
-                        }
+                        counts[index] += traverse(index, 8);
                     }
 
                     // right
                     if (squares[index + 1].equals(their_color)) {
-                        temp =  traverse(index, 1);
-                        if (temp > counts[index]) {
-                            counts[index] = temp;
-                            dir = 1;
-                        }
+                        counts[index] += traverse(index, 1);
                     }
-                } else if (index == 56){
+                } else if (index == 56) {
                     // up right
                     if (squares[index - 7].equals(their_color)) {
-                        temp =  traverse(index, -7);
-                        if (temp > counts[index]) {
-                            counts[index] = temp;
-                            dir = -7;
-                        }
+                        counts[index] += traverse(index, -7);
                     }
                     // above
                     if (squares[index - 8].equals(their_color)) {
-                        temp =  traverse(index, -8);
-                        if (temp > counts[index]) {
-                            counts[index] = temp;
-                            dir = -8;
-                        }
+                        counts[index] += traverse(index, -8);
                     }
 
                     // right
                     if (squares[index + 1].equals(their_color)) {
-                        temp =  traverse(index, 1);
-                        if (temp > counts[index]) {
-                            counts[index] = temp;
-                            dir = 1;
-                        }
+                        counts[index] += traverse(index, 1);
                     }
                 } else {
                     // up right
                     if (squares[index - 7].equals(their_color)) {
-                        temp =  traverse(index, -7);
-                        if (temp > counts[index]) {
-                            counts[index] = temp;
-                            dir = -7;
-                        }
+                        counts[index] += traverse(index, -7);
                     }
 
                     // below right
                     if (squares[index + 9].equals(their_color)) {
-                        temp =  traverse(index, 9);
-                        if (temp > counts[index]) {
-                            counts[index] = temp;
-                            dir = 9;
-                        }
+                        counts[index] += traverse(index, 9);
                     }
 
                     // below
                     if (squares[index + 8].equals(their_color)) {
-                        temp =  traverse(index, 8);
-                        if (temp > counts[index]) {
-                            counts[index] = temp;
-                            dir = 8;
-                        }
+                        counts[index] += traverse(index, 8);
                     }
 
                     // above
                     if (squares[index - 8].equals(their_color)) {
-                        temp =  traverse(index, -8);
-                        if (temp > counts[index]) {
-                            counts[index] = temp;
-                            dir = -8;
-                        }
+                        counts[index] += traverse(index, -8);
                     }
 
                     // right
                     if (squares[index + 1].equals(their_color)) {
-                        temp =  traverse(index, 1);
-                        if (temp > counts[index]) {
-                            counts[index] = temp;
-                            dir = 1;
-                        }
+                        counts[index] += traverse(index, 1);
                     }
                 }
-                // right column
             } else if (index % 8 == 7) {
                 if (index == 63) {
                     // above
                     if (squares[index - 8].equals(their_color)) {
-                        temp =  traverse(index, -8);
-                        if (temp > counts[index]) {
-                            counts[index] = temp;
-                            dir = -8;
-                        }
+                        counts[index] += traverse(index, -8);
                     }
                     // left
                     if (squares[index - 1].equals(their_color)) {
-                        temp =  traverse(index, -1);
-                        if (temp > counts[index]) {
-                            counts[index] = temp;
-                            dir = -1;
-                        }
+                        counts[index] += traverse(index, -1);
                     }
                     // up left
                     if (squares[index - 9].equals(their_color)) {
-                        temp =  traverse(index, -9);
-                        if (temp > counts[index]) {
-                            counts[index] = temp;
-                            dir = -9;
-                        }
+                        counts[index] += traverse(index, -9);
                     }
-                }
-                else if (index == 7) {
+                } else if (index == 7) {
                     // below
                     if (squares[index + 8].equals(their_color)) {
-                        temp =  traverse(index, 8);
-                        if (temp > counts[index]) {
-                            counts[index] = temp;
-                            dir = 8;
-                        }
+                        counts[index] += traverse(index, 8);
                     }
                     // below left
                     if (squares[index + 7].equals(their_color)) {
-                        temp =  traverse(index, 7);
-                        if (temp > counts[index]) {
-                            counts[index] = temp;
-                            dir = 7;
-                        }
+                        counts[index] += traverse(index, 7);
                     }
                     // left
                     if (squares[index - 1].equals(their_color)) {
-                        temp =  traverse(index, -1);
-                        if (temp > counts[index]) {
-                            counts[index] = temp;
-                            dir = -1;
-                        }
+                        counts[index] += traverse(index, -1);
                     }
                 } else {
                     // below
                     if (squares[index + 8].equals(their_color)) {
-                        temp =  traverse(index, 8);
-                        if (temp > counts[index]) {
-                            counts[index] = temp;
-                            dir = 8;
-                        }
+                        counts[index] += traverse(index, 8);
                     }
 
                     // above
                     if (squares[index - 8].equals(their_color)) {
-                        temp =  traverse(index, -8);
-                        if (temp > counts[index]) {
-                            counts[index] = temp;
-                            dir = -8;
-                        }
+                        counts[index] += traverse(index, -8);
                     }
 
                     // up left
                     if (squares[index - 9].equals(their_color)) {
-                        temp =  traverse(index, -9);
-                        if (temp > counts[index]) {
-                            counts[index] = temp;
-                            dir = -9;
-                        }
+                        counts[index] += traverse(index, -9);
                     }
 
                     // below left
                     if (squares[index + 7].equals(their_color)) {
-                        temp =  traverse(index, 7);
-                        if (temp > counts[index]) {
-                            counts[index] = temp;
-                            dir = 7;
-                        }
+                        counts[index] += traverse(index, 7);
                     }
 
                     // left
                     if (squares[index - 1].equals(their_color)) {
-                        temp =  traverse(index, -1);
-                        if (temp > counts[index]) {
-                            counts[index] = temp;
-                            dir = -1;
-                        }
+                        counts[index] += traverse(index, -1);
                     }
                 }
             }
         }
-        return dir;
+        return (counts[index] > 0);
     }
 }
