@@ -13,6 +13,11 @@ import java.util.logging.SimpleFormatter;
 public class Othello {
 
     private static final Logger log = Logger.getLogger(Othello.class.getName());
+
+    private static String color;
+    private static int time;
+    private static String[] squares;
+
     public static void main(String[] args) {
 	// write your code here
         FileHandler fh;
@@ -38,36 +43,59 @@ public class Othello {
         System.out.println("Height: " + board.height);
         System.out.println("Width: " + board.width);
         System.out.println("Max: " + board.maxindex);
-        for (String piece : board.squares) {
-            System.out.println(piece);
-        }
+        squares = board.squares;
 
         if (args[1].equals("black")) {
+            color = "w"; // looking for white pieces since we are black
+        } else {
+            color = "b";
         }
-        if (args[1].equals("white")) {
-        }
-        int place_to_go = find_empty_place(board.squares);
-        System.exit(place_to_go);
+        time = Integer.parseInt(args[2]);
     }
 
-    public static int find_empty_place(String[] board) {
-        int spot = -1;
-
-        boolean[] valid = new boolean[board.length];
+    public static boolean[] fill_valid_sqaures() {
+        boolean[] valid = new boolean[squares.length];
+        int index = -1;
         Arrays.fill(valid, false);
-        for (int i = 0; i < board.length; i++) {
-            if (board[i].equals("-")) {
-                valid[i] = true;
-                spot = i;
-                break;
-            }
-            if (board[i].equals("b")) {
-                valid[i] = false;
-            }
-            if (board[i].equals("w")) {
-                valid[i] = false;
+        for (int i = 0; i < squares.length; i++) {
+            if (squares[i].equals(color)) {
+                if (index % 8 > 0 || index % 8 < 7) { // check the sides
+                    if ((index = check_vert(i)) > 0) {
+
+                    }
+                }
+                if ((index > 0 && index < 7) || (index < 63 && index > 56)) { // top and bottom
+                    if ((index = check_horz(i)) > 0) {
+
+                    }
+                } else {
+                    if ((index = check_horz(i)) > 0) {
+                        valid[index] = true;
+                    }
+                    if ((index = check_vert(i)) > 0) {
+                        valid[index] = true;
+                    }
+                }
+
             }
         }
-        return spot;
+
+        return valid;
+    }
+
+    public static int check_horz(int index) {
+     
+    }
+
+    public static int check_vert(int index) {
+
+    }
+
+    public static int check_diag_lr(int index) {
+
+    }
+
+    public static int check_diag_rl(int index) {
+
     }
 }
