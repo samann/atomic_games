@@ -1,0 +1,9 @@
+target
+.nrepl-port
+.lein-repl-history
+player1.sh
+*.swp
+*.swo
+*.swn
+game_output.txt
+.lein-failures
