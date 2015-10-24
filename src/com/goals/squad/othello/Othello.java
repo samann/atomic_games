@@ -19,7 +19,7 @@ public class Othello {
     private static final String empty = "-";
     private static int time;
     private static String[] squares;
-
+    private static int count = 0;
     public static void main(String[] args) {
 	// write your code here
         FileHandler fh;
@@ -59,7 +59,10 @@ public class Othello {
         boolean[] test = fill_valid_sqaures();
         int i = 0;
         for (boolean b : test) {
-            System.out.println("index: " + i++ + " : " + b);
+            if (b) {
+                System.exit(i);
+            }
+            i++;
         }
     }
 
@@ -107,13 +110,13 @@ public class Othello {
 
     public static boolean traverse(int index, int dir) {
         while ((index > 0 && index < 63) ||
-                ( (index % 8 != 7) || (index % 8 != 0) ) &&
-                        squares[index + dir].equals(their_color)) {
-            if (squares[index + dir].equals(our_color) ){
-                return true;
-            }
+                ( (index % 8 != 7) || (index % 8 != 0) ) && squares[index + dir].equals(their_color)) {
             if (squares[index + dir].equals(empty)) {
                 return false;
+            }
+            count++;
+            if (squares[index + dir].equals(our_color) ){
+                return true;
             }
             index = index + dir;
         }
