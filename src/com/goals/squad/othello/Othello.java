@@ -109,9 +109,9 @@ public class Othello {
         return count;
     }
 
-    public static int[] is_valid(int index) {
-
-        int temp;
+    public static int is_valid(int index) {
+        // return direction
+        int temp, dir = 0;
         if (squares[index].equals(empty)) {
             log.log(Level.INFO, "index = " + index);
             // middle of board
@@ -121,6 +121,7 @@ public class Othello {
                     temp = traverse(index, 8);
                     if (temp > counts[index]) {
                         counts[index] = temp;
+                        dir = 8;
                     }
                 }
 
@@ -129,6 +130,7 @@ public class Othello {
                      temp = traverse(index, -8);
                     if (temp > counts[index]) {
                         counts[index] = temp;
+                        dir = -8;
                     }
                 }
 
@@ -137,6 +139,7 @@ public class Othello {
                     temp =  traverse(index, 1);
                     if (temp > counts[index]) {
                         counts[index] = temp;
+                        dir = 1;
                     }
                 }
 
@@ -145,6 +148,7 @@ public class Othello {
                     temp =  traverse(index, -1);
                     if (temp > counts[index]) {
                         counts[index] = temp;
+                        dir = -1;
                     }
                 }
 
@@ -153,6 +157,7 @@ public class Othello {
                     temp =  traverse(index, -7);
                     if (temp > counts[index]) {
                         counts[index] = temp;
+                        dir = -7;
                     }
                 }
 
@@ -161,6 +166,7 @@ public class Othello {
                     temp =  traverse(index, -9);
                     if (temp > counts[index]) {
                         counts[index] = temp;
+                        dir = -9;
                     }
                 }
 
@@ -169,6 +175,7 @@ public class Othello {
                     temp =  traverse(index, 7);
                     if (temp > counts[index]) {
                         counts[index] = temp;
+                        dir = 7;
                     }
                 }
 
@@ -177,6 +184,7 @@ public class Othello {
                     temp =  traverse(index, 9);
                     if (temp > counts[index]) {
                         counts[index] = temp;
+                        dir = 9;
                     }
                 }
                 // top row
@@ -187,6 +195,7 @@ public class Othello {
                     temp =  traverse(index, 7);
                     if (temp > counts[index]) {
                         counts[index] = temp;
+                        dir = 7;
                     }
                 }
 
@@ -195,6 +204,7 @@ public class Othello {
                     temp =  traverse(index, 9);
                     if (temp > counts[index]) {
                         counts[index] = temp;
+                        dir = 9;
                     }
                 }
 
@@ -203,6 +213,7 @@ public class Othello {
                     temp =  traverse(index, 1);
                     if (temp > counts[index]) {
                         counts[index] = temp;
+                        dir = 1;
                     }
                 }
 
@@ -211,6 +222,7 @@ public class Othello {
                     temp =  traverse(index, -1);
                     if (temp > counts[index]) {
                         counts[index] = temp;
+                        dir = -1;
                     }
                 }
 
@@ -219,6 +231,7 @@ public class Othello {
                     temp =  traverse(index, 8);
                     if (temp > counts[index]) {
                         counts[index] = temp;
+                        dir = 8;
                     }
                 }
                 // bottom row
@@ -228,6 +241,7 @@ public class Othello {
                     temp =  traverse(index, -8);
                     if (temp > counts[index]) {
                         counts[index] = temp;
+                        dir = -8;
                     }
                 }
 
@@ -236,6 +250,7 @@ public class Othello {
                     temp =  traverse(index, 1);
                     if (temp > counts[index]) {
                         counts[index] = temp;
+                        dir = 1;
                     }
                 }
 
@@ -244,6 +259,7 @@ public class Othello {
                     temp =  traverse(index, -1);
                     if (temp > counts[index]) {
                         counts[index] = temp;
+                        dir = -1;
                     }
                 }
 
@@ -252,6 +268,7 @@ public class Othello {
                     temp =  traverse(index, -7);
                     if (temp > counts[index]) {
                         counts[index] = temp;
+                        dir = -7;
                     }
                 }
 
@@ -260,6 +277,7 @@ public class Othello {
                     temp =  traverse(index, -9);
                     if (temp > counts[index]) {
                         counts[index] = temp;
+                        dir = -9;
                     }
                 }
                 // left column
@@ -270,6 +288,7 @@ public class Othello {
                         temp =  traverse(index, 9);
                         if (temp > counts[index]) {
                             counts[index] = temp;
+                            dir = 9;
                         }
                     }
 
@@ -278,6 +297,7 @@ public class Othello {
                         temp =  traverse(index, 8);
                         if (temp > counts[index]) {
                             counts[index] = temp;
+                            dir = 8;
                         }
                     }
 
@@ -286,6 +306,7 @@ public class Othello {
                         temp =  traverse(index, 1);
                         if (temp > counts[index]) {
                             counts[index] = temp;
+                            dir = 1;
                         }
                     }
                 } else if (index == 56){
@@ -294,6 +315,7 @@ public class Othello {
                         temp =  traverse(index, -7);
                         if (temp > counts[index]) {
                             counts[index] = temp;
+                            dir = -7;
                         }
                     }
                     // above
@@ -301,6 +323,7 @@ public class Othello {
                         temp =  traverse(index, -8);
                         if (temp > counts[index]) {
                             counts[index] = temp;
+                            dir = -8;
                         }
                     }
 
@@ -309,6 +332,7 @@ public class Othello {
                         temp =  traverse(index, 1);
                         if (temp > counts[index]) {
                             counts[index] = temp;
+                            dir = 1;
                         }
                     }
                 } else {
@@ -317,6 +341,7 @@ public class Othello {
                         temp =  traverse(index, -7);
                         if (temp > counts[index]) {
                             counts[index] = temp;
+                            dir = -7;
                         }
                     }
 
@@ -325,6 +350,7 @@ public class Othello {
                         temp =  traverse(index, 9);
                         if (temp > counts[index]) {
                             counts[index] = temp;
+                            dir = 9;
                         }
                     }
 
@@ -333,6 +359,7 @@ public class Othello {
                         temp =  traverse(index, 8);
                         if (temp > counts[index]) {
                             counts[index] = temp;
+                            dir = 8;
                         }
                     }
 
@@ -341,6 +368,7 @@ public class Othello {
                         temp =  traverse(index, -8);
                         if (temp > counts[index]) {
                             counts[index] = temp;
+                            dir = -8;
                         }
                     }
 
@@ -349,6 +377,7 @@ public class Othello {
                         temp =  traverse(index, 1);
                         if (temp > counts[index]) {
                             counts[index] = temp;
+                            dir = 1;
                         }
                     }
                 }
@@ -360,6 +389,7 @@ public class Othello {
                         temp =  traverse(index, -8);
                         if (temp > counts[index]) {
                             counts[index] = temp;
+                            dir = -8;
                         }
                     }
                     // left
@@ -367,6 +397,7 @@ public class Othello {
                         temp =  traverse(index, -1);
                         if (temp > counts[index]) {
                             counts[index] = temp;
+                            dir = -1;
                         }
                     }
                     // up left
@@ -374,6 +405,7 @@ public class Othello {
                         temp =  traverse(index, -9);
                         if (temp > counts[index]) {
                             counts[index] = temp;
+                            dir = -9;
                         }
                     }
                 }
@@ -383,6 +415,7 @@ public class Othello {
                         temp =  traverse(index, 8);
                         if (temp > counts[index]) {
                             counts[index] = temp;
+                            dir = 8;
                         }
                     }
                     // below left
@@ -390,6 +423,7 @@ public class Othello {
                         temp =  traverse(index, 7);
                         if (temp > counts[index]) {
                             counts[index] = temp;
+                            dir = 7;
                         }
                     }
                     // left
@@ -397,6 +431,7 @@ public class Othello {
                         temp =  traverse(index, -1);
                         if (temp > counts[index]) {
                             counts[index] = temp;
+                            dir = -1;
                         }
                     }
                 } else {
@@ -405,6 +440,7 @@ public class Othello {
                         temp =  traverse(index, 8);
                         if (temp > counts[index]) {
                             counts[index] = temp;
+                            dir = 8;
                         }
                     }
 
@@ -413,6 +449,7 @@ public class Othello {
                         temp =  traverse(index, -8);
                         if (temp > counts[index]) {
                             counts[index] = temp;
+                            dir = -8;
                         }
                     }
 
@@ -421,6 +458,7 @@ public class Othello {
                         temp =  traverse(index, -9);
                         if (temp > counts[index]) {
                             counts[index] = temp;
+                            dir = -9;
                         }
                     }
 
@@ -429,6 +467,7 @@ public class Othello {
                         temp =  traverse(index, 7);
                         if (temp > counts[index]) {
                             counts[index] = temp;
+                            dir = 7;
                         }
                     }
 
@@ -437,11 +476,12 @@ public class Othello {
                         temp =  traverse(index, -1);
                         if (temp > counts[index]) {
                             counts[index] = temp;
+                            dir = -1;
                         }
                     }
                 }
             }
         }
-        return counts;
+        return dir;
     }
 }
