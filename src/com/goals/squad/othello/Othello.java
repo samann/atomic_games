@@ -55,38 +55,14 @@ public class Othello {
             our_color = "w";
         }
         time = Integer.parseInt(args[2]);
+
+        boolean[] test = fill_valid_sqaures();
+        int i = 0;
+        for (boolean b : test) {
+            System.out.println("index: " + i++ + " : " + b);
+        }
     }
 
-//    public static boolean[] fill_valid_sqaures() {
-//        boolean[] valid = new boolean[squares.length];
-//        int index = -1;
-//        Arrays.fill(valid, false);
-//        for (int i = 1; i < squares.length - 1; i++) {
-//            // find a vlid spot based on one square
-//            if (squares[i].equals(their_color)) {
-//                if (index % 8 > 0 || index % 8 < 7) { // check the sides
-//                    if ((index = check_vert(i)) > 0) {
-//
-//                    }
-//                }
-//                if ((index > 0 && index < 7) || (index < 63 && index > 56)) { // top and bottom
-//                    if ((index = check_horz(i)) > 0) {
-//
-//                    }
-//                } else {
-//                    if ((index = check_horz(i)) > 0) {
-//                        valid[index] = true;
-//                    }
-//                    if ((index = check_vert(i)) > 0) {
-//                        valid[index] = true;
-//                    }
-//                }
-//
-//            }
-//        }
-//
-//        return valid;
-//    }
     /**
      * if our color is on one side and empty onthe other
      */
@@ -147,8 +123,7 @@ public class Othello {
     public static boolean is_valid(int index) {
         if (squares[index].equals(empty)) {
             // middle of board
-            if (index % 8 > 0 || index % 8 < 7) {
-
+            if (index % 8 > 0 && index % 8 < 7 && index > 8 && index < 55) {
                 // below
                 if (squares[index + 8].equals(their_color)) {
                     return traverse(index, 8);
