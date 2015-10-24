@@ -19,9 +19,7 @@ public class Othello {
     private static final String empty = "-";
     private static int time;
     private static String[] squares;
-
-    private static int[] counts;
-
+    private static int count = 0;
     public static void main(String[] args) {
         // write your code here
         FileHandler fh;
@@ -57,259 +55,256 @@ public class Othello {
             our_color = "w";
         }
         time = Integer.parseInt(args[2]);
-        counts = new int[squares.length];
-        Arrays.fill(counts, 0);
-        for (int i = 0; i < squares.length; i++) {
-            is_valid(i);
-        }
-        System.exit(find_highest_count());
-    }
 
-    public static int find_highest_count() {
-        int temp = 0, index = -1;
-        for (int i = 0; i < counts.length; i++) {
-            if (counts[i] > temp) {
-                temp = counts[i];
-                index = i;
+        boolean[] test = fill_valid_sqaures();
+        int i = 0;
+        for (boolean b : test) {
+            if (b) {
+                System.exit(i);
             }
+            i++;
         }
-        return index;
     }
 
-    public static int traverse(int index, int dir) {
-        boolean traversed = false;
-        int count = 0;
-        log.log(Level.INFO, "index = " + index + " count = " + counts[index]);
+    public static boolean[] fill_valid_sqaures() {
+        boolean[] valid = new boolean[squares.length];
+        int index = -1;
+        Arrays.fill(valid, false);
+        for (int i = 0; i < squares.length; i++) {
+            valid[i] = is_valid(i);
+        }
+        return valid;
+    }
+
+    public static boolean traverse(int index, int dir) {
         while ((index > 0 && index < 63) ||
-                ((index % 8 != 7) || (index % 8 != 0)) && !traversed) {
-
+                ( (index % 8 != 7) || (index % 8 != 0) ))  {
             index = index + dir;
-
-            if (index < 0 || index > 63) {
+            if (index > 63 || index < 0) {
                 break;
             }
             if (squares[index].equals(empty)) {
-                traversed = true;
-            } else if (squares[index].equals(our_color)) {
-                traversed = true;
-            } else if (squares[index].equals(their_color)) {
-                traversed = false;
-                count++;
+                return false;
+            }
+            if (squares[index].equals(our_color) ){
+                return true;
+            }
+            if (squares[index].equals(their_color)) {
+                traverse(index, dir);
             }
         }
-        return count;
+        return false;
     }
 
     public static boolean is_valid(int index) {
-        // return direction
         if (squares[index].equals(empty)) {
-
             // middle of board
-            if ((index % 8 > 0 && index % 8 < 7) && (index > 8 && index < 55)) {
+            if (index % 8 > 0 && index % 8 < 7 && index > 8 && index < 55) {
                 // below
                 if (squares[index + 8].equals(their_color)) {
-                    counts[index] += traverse(index, 8);
+                    return traverse(index, 8);
                 }
 
                 // above
                 if (squares[index - 8].equals(their_color)) {
-                    counts[index] += traverse(index, -8);
+                    return traverse(index, -8);
                 }
 
                 // right
                 if (squares[index + 1].equals(their_color)) {
-                    counts[index] += traverse(index, 1);
+                    return traverse(index, 1);
                 }
 
                 // left
                 if (squares[index - 1].equals(their_color)) {
-                    counts[index] += traverse(index, -1);
+                    return traverse(index, -1);
                 }
 
                 // up right
                 if (squares[index - 7].equals(their_color)) {
-                    counts[index] += traverse(index, -7);
+                    return traverse(index, -7);
                 }
 
                 // up left
                 if (squares[index - 9].equals(their_color)) {
-                    counts[index] += traverse(index, -9);
+                    return traverse(index, -9);
                 }
 
                 // below left
                 if (squares[index + 7].equals(their_color)) {
-                    counts[index] += traverse(index, 7);
+                    return traverse(index, 7);
                 }
 
                 // below right
                 if (squares[index + 9].equals(their_color)) {
-                    counts[index] += traverse(index, 9);
+                    return traverse(index, 9);
                 }
                 // top row
             } else if (index > 0 && index < 7) {
 
                 // below left
                 if (squares[index + 7].equals(their_color)) {
-                    counts[index] += traverse(index, 7);
+                    return traverse(index, 7);
                 }
 
                 // below right
                 if (squares[index + 9].equals(their_color)) {
-                    counts[index] += traverse(index, 9);
+                    return traverse(index, 9);
                 }
 
                 // right
                 if (squares[index + 1].equals(their_color)) {
-                    counts[index] += traverse(index, 1);
+                    return traverse(index, 1);
                 }
 
                 // left
                 if (squares[index - 1].equals(their_color)) {
-                    counts[index] += traverse(index, -1);
+                    return traverse(index, -1);
                 }
 
                 // below
                 if (squares[index + 8].equals(their_color)) {
-                    counts[index] += traverse(index, 8);
+                    return traverse(index, 8);
                 }
                 // bottom row
             } else if (index > 56 && index < 63) {
                 // above
                 if (squares[index - 8].equals(their_color)) {
-                    counts[index] += traverse(index, -8);
+                    return traverse(index, -8);
                 }
 
                 // right
                 if (squares[index + 1].equals(their_color)) {
-                    counts[index] += traverse(index, 1);
+                    return traverse(index, 1);
                 }
 
                 // left
                 if (squares[index - 1].equals(their_color)) {
-                    counts[index] += traverse(index, -1);
+                    return traverse(index, -1);
                 }
 
                 // up right
                 if (squares[index - 7].equals(their_color)) {
-                    counts[index] += traverse(index, -7);
+                    return traverse(index, -7);
                 }
 
                 // up left
                 if (squares[index - 9].equals(their_color)) {
-                    counts[index] += traverse(index, -9);
+                    return traverse(index, -9);
                 }
                 // left column
             } else if (index % 8 == 0) {
                 if (index == 0) {
                     // below right
                     if (squares[index + 9].equals(their_color)) {
-                        counts[index] += traverse(index, 9);
+                        return traverse(index, 9);
                     }
 
                     // below
                     if (squares[index + 8].equals(their_color)) {
-                        counts[index] += traverse(index, 8);
+                        return traverse(index, 8);
                     }
 
                     // right
                     if (squares[index + 1].equals(their_color)) {
-                        counts[index] += traverse(index, 1);
+                        return traverse(index, 1);
                     }
-                } else if (index == 56) {
+                } else if (index == 56){
                     // up right
                     if (squares[index - 7].equals(their_color)) {
-                        counts[index] += traverse(index, -7);
+                        return traverse(index, -7);
                     }
                     // above
                     if (squares[index - 8].equals(their_color)) {
-                        counts[index] += traverse(index, -8);
+                        return traverse(index, -8);
                     }
 
                     // right
                     if (squares[index + 1].equals(their_color)) {
-                        counts[index] += traverse(index, 1);
+                        return traverse(index, 1);
                     }
                 } else {
                     // up right
                     if (squares[index - 7].equals(their_color)) {
-                        counts[index] += traverse(index, -7);
+                        return traverse(index, -7);
                     }
 
                     // below right
                     if (squares[index + 9].equals(their_color)) {
-                        counts[index] += traverse(index, 9);
+                        return traverse(index, 9);
                     }
 
                     // below
                     if (squares[index + 8].equals(their_color)) {
-                        counts[index] += traverse(index, 8);
+                        return traverse(index, 8);
                     }
 
                     // above
                     if (squares[index - 8].equals(their_color)) {
-                        counts[index] += traverse(index, -8);
+                        return traverse(index, -8);
                     }
 
                     // right
                     if (squares[index + 1].equals(their_color)) {
-                        counts[index] += traverse(index, 1);
+                        return traverse(index, 1);
                     }
                 }
             } else if (index % 8 == 7) {
                 if (index == 63) {
                     // above
                     if (squares[index - 8].equals(their_color)) {
-                        counts[index] += traverse(index, -8);
+                        return traverse(index, -8);
                     }
                     // left
                     if (squares[index - 1].equals(their_color)) {
-                        counts[index] += traverse(index, -1);
+                        return traverse(index, -1);
                     }
                     // up left
                     if (squares[index - 9].equals(their_color)) {
-                        counts[index] += traverse(index, -9);
+                        return traverse(index, -9);
                     }
-                } else if (index == 7) {
+                }
+                else if (index == 7) {
                     // below
                     if (squares[index + 8].equals(their_color)) {
-                        counts[index] += traverse(index, 8);
+                        return traverse(index, 8);
                     }
                     // below left
                     if (squares[index + 7].equals(their_color)) {
-                        counts[index] += traverse(index, 7);
+                        return traverse(index, 7);
                     }
                     // left
                     if (squares[index - 1].equals(their_color)) {
-                        counts[index] += traverse(index, -1);
+                        return traverse(index, -1);
                     }
                 } else {
                     // below
                     if (squares[index + 8].equals(their_color)) {
-                        counts[index] += traverse(index, 8);
+                        return traverse(index, 8);
                     }
 
                     // above
                     if (squares[index - 8].equals(their_color)) {
-                        counts[index] += traverse(index, -8);
+                        return traverse(index, -8);
                     }
 
                     // up left
                     if (squares[index - 9].equals(their_color)) {
-                        counts[index] += traverse(index, -9);
+                        return traverse(index, -9);
                     }
 
                     // below left
                     if (squares[index + 7].equals(their_color)) {
-                        counts[index] += traverse(index, 7);
+                        return traverse(index, 7);
                     }
 
                     // left
                     if (squares[index - 1].equals(their_color)) {
-                        counts[index] += traverse(index, -1);
+                        return traverse(index, -1);
                     }
                 }
             }
         }
-        return (counts[index] > 0);
+        return false;
     }
 }
