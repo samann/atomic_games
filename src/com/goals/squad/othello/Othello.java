@@ -3,7 +3,6 @@ package com.goals.squad.othello;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -89,7 +88,7 @@ public class Othello {
             if (squares[index].equals(our_color) ){
                 return true;
             }
-            if (squares[index].equals(their_color)) {
+            if (squares[index].equals(their_color) && squares[index - dir].equals(our_color)) {
                 traverse(index, dir);
             }
         }
